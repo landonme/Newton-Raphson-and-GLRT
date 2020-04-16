@@ -45,13 +45,6 @@ print(f'Our estimate of Beta is: {round(B, 4)}')
 print(f'Our estimate of Theta is: {round(A, 4)}')
 
 
-## Finding the Median
-def mfunc(b, a):
-    return a*(np.log(2))**(1/b)
-M = mfunc(B,A)
-print(f'Our estimate of the Median is: {round(M, 4)}')
-
-
 # SE should be .01576,
 # 0.1078 = SE, 1.96*SE   -- according to allen
 
@@ -93,11 +86,31 @@ print(f"Beta MLE [lower CI, estimate, upper CI]:\n  {B_list}")
 print(f"Theta MLE [lower CI, estimate, upper CI]:\n  {A_list}")
 
 
+#### Median Derivation
 
 
-## Plug in bounds for the Median
-M_lower = mfunc(B_lower, A_lower)
-M_upper = mfunc(B_upper, A_upper)
+## Finding the Median
+def mfunc(b, a):
+    return a*(np.log(2))**(1/b)
+M = mfunc(B,A)
+print(f'Our estimate of the Median is: {round(M, 4)}')
+
+
+
+
+## 95% CI For Median
+varb = vc[0,0]
+vara = vc[1,1]
+cov = vc[0,1]
+dtheta = np.log(2)**(1/B)
+dbeta = -(np.log(2)**(1/B)*np.log(np.log(2))*A)/(B**2)
+dthetasq = dtheta**2
+dbetasq = dbeta**2
+
+var_m = dthetasq*vara + dbetasq*varb + 2*dtheta*dbeta*cov
+se_m = np.sqrt(var_m)
+M_upper = M + 1.96*se_m
+M_lower = M - 1.96*se_m
 M_list = [M_lower, M, M_upper]
 print(f"Beta MLE [lower CI, estimate, upper CI]:\n  {M_list}")
 
