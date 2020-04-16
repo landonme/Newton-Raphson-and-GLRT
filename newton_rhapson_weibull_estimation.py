@@ -10,13 +10,40 @@ import os
 import pandas as pd
 import numpy as np
 
-os.chdir("C:\\Users\\Lando\\Desktop\\Newton Rhapson")
+
+
+os.chdir("C:\\Users\\Lando\\Desktop\\GitHub\\Newton-Raphson-and-GLRT")
+
+
+
 data = pd.read_csv("melanoma years till death or relapse.csv")
 X = data.X
 
-### Finding MLES through Newton Rhapson
+### Finding MLES through Newton Rhapson algorithm
 # =========================================================================
 def nwt(func,Dfunc,x0,min,max_iter):
+    '''
+    
+    Parameters
+    ----------
+    func : 
+        This is the function that needs a root found. If trying to estimate a MLE, this is
+        the derivative of the log likelihood as we want to maximize the log likelihood.
+    Dfunc : function
+        The derivative of the function func.
+    x0 : float
+        This is the starting point for the algorithm. Should be a best guess of the root.
+    min : float
+        Threshold for stopping criteria
+    max_iter : int
+        maximum number of rounds before stopping.
+
+    Returns
+    -------
+    xn : 
+        Root of func
+
+    '''
     xn = x0
     for n in range(0,max_iter):
         fx = func(xn)
