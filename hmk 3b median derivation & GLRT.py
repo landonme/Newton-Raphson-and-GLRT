@@ -70,24 +70,7 @@ m = -1*np.matrix([[dbb,dba],[dab,daa]])
 ## get Variance Covariance Matrix by inverting information matrix
 vc = m.I
 
-## the top left, bottom right are the variances, the other 2 are covariances. Use the variances for conf. intervals.
-B_lower = B - 1.96*np.sqrt(vc[0,0])
-B_upper = B + 1.96*np.sqrt(vc[0,0])
-
-A_lower = A - 1.96*np.sqrt(vc[1,1])
-A_upper = A + 1.96*np.sqrt(vc[1,1])
-
-
-B_list = [B_lower, B, B_upper]
-A_list = [A_lower, A, A_upper]
-
-## Print out MLEs with Confidence Intervals.
-print(f"Beta MLE [lower CI, estimate, upper CI]:\n  {B_list}")
-print(f"Theta MLE [lower CI, estimate, upper CI]:\n  {A_list}")
-
-
 #### Median Derivation
-
 
 ## Finding the Median
 def mfunc(b, a):
